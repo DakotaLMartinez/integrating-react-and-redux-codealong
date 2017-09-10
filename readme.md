@@ -140,7 +140,7 @@ Ok, done and done. We moved our Redux code over to our new application, and we a
 
 ## Integrating Redux
 
-So this is the plan. First, we create our store by passing our reducer to the `createStore()` function. Then we can call `store.dispatch()` from a React component by passing through the store object as a prop to the needed component. Essentially, we want to call `store.dispatch({ type: 'INCREASE_COUNT' })` when we click on the button.  
+So this is the plan. First, we create our store by passing our reducer to the `createStore()` function. Then, we'll call `store.dispatch({ type: '@@INIT'})` to make sure our initial state is set by the changeState reducer's default state argument. Finally, we can call `store.dispatch()` from a React component by passing through the store object as a prop to the needed component. Essentially, we want to call `store.dispatch({ type: 'INCREASE_COUNT' })` when we click on the button.  
 
 So we'll do the following:
 
@@ -165,6 +165,8 @@ So we'll do the following:
       document.getElementById('root')
     );
   };
+  
+  store.dispatch({ type: '@@INIT' });
 
   render();
   ```
@@ -241,7 +243,7 @@ export default function createStore(reducer) {
 };
 ```
 
-We also need to initiate a dispatch call to start the store state in our `./src/index.js` file. Our `./src/index.js` file should now look like the following:
+Finally, we can remove our `render()` call from the `./src/index.js` file as our initial call to `store.dispatch()` is now calling `render()` for us. Our `./src/index.js` file should now look like the following:
 
 ```JavaScript
 // ./src/index.js
